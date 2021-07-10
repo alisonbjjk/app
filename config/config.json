@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "sa",
+    "password": "teste123",
+    "database": "teste",
+    "host": "192.168.1.99",
+    "port": "1433",
+    "dialect": "mssql",
+    "encrypt": false
+  },
+  
+"urlRoot": "http://192.168.0.230:3000/"
+}
