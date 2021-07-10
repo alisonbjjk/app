@@ -15,8 +15,6 @@ app.get('/', (req, res) => {
 
 });
 
-
-
 let db = require('./routes/conn');
 var sql = require("mssql");
 const { response } = require('express');
@@ -24,32 +22,62 @@ app.post('/logado', async (req, res) => {
 
     const pullTable = async () => {
         const pool = await sql.connect(db.db);
-        const nome = req.query.name;
-        const sqlQuery = `SELECT top 1 * FROM USUARIO_EMPREENDEDOR WHERE login = '${nome}'`;
+        var nome = '';
+        var senha = '';
+        var nome = req.query.name;
+        var senha = req.query.password;
+
+        // const sqlQuery = `SELECT top 1 * from master WHERE login = '${nome}'`;
+
+        const sqlQuery = `SELECT top 1 * from cidade WHERE estado = '${nome}' and id_cidade = '${senha}'`;
+        console.log(sqlQuery);
+
+        // const sqlQuery = `SELECT pwdcompare('${senha}',l.senha) as retorno, 
+        // u.usuario_empreendedor_id, u.cliente_id
+        // FROM USUARIO_EMPREENDEDOR u, usuario_empreendedor_login l
+        // WHERE u.usuario_empreendedor_id = l.usuario_empreendedor_id
+        // and l.login='${nome}'`;
+
         const result = await pool.request().query(sqlQuery);
-        console.log(result);
-    }
-    pullTable();
-});
 
-
-
-app.post('/login', async (req, res) => {
-    console.log(req);
-    let response = await user.findOne({
-        where: {
-            name: req.query.name,
-            password: req.query.password
+        if (result.rowsAffected == 0) {
+            res.send(JSON.stringify('error'));
+        } else {
+            console.log(result.recordset);
+            res.send(response);
         }
-    });
-
-    if (response === null) {
-        res.send(JSON.stringify('error'));
-    } else {
-        res.send(response);
     }
+    return pullTable();
+});
+
+
+app.get('/novidades', async (req, res) => {
+
+    const pool = await sql.connect(db.db);
+    var id = '';
+    var id = req.query.id;
+    const sqlQuery = `SELECT top 1 * from USUARIO_EMPREENDEDOR WHERE estado = '${id}'`;
+    console.log(sqlQuery);
 
 });
+
+
+// app.post('/login', async (req, res) => {
+//     console.log(req);
+//     let response = await user.findOne({
+//         where: {
+//             name: req.query.name,
+//             password: req.query.password
+//         }
+//     });
+
+//     if (response === null) {
+//         res.send(JSON.stringify('error'));
+//     } else {
+//         res.send(response);
+//     }
+
+// });
 
 app.post('/verifyPass', async (req, res) => {
     let response = await user.findOne({
@@ -110,7 +138,7 @@ app.get('/delete', async (req, res) => {
 
 let port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
-    console.log('Servidor Rodando');
+    console.log('Servidor Ativado');
 });
 
 

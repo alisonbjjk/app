@@ -1,11 +1,12 @@
 var db = {
-    user: 'user_cerberus_2002',
-    password: 'c3rb3rus_2002',
-    database: 'cerberus_2002',
-    server: '192.168.0.78',
+    user: 'sa',
+    password: '@JiuJitsu333',
+    database: 'model',
+    server: '192.168.1.3',
     options: {
         encrypt: false,
-    }
+    },
+    urlRoot: "http://127.0.0.1:3000/"
 };
 
 exports.db = db;

@@ -4,7 +4,8 @@ import { css } from '../assets/css/Css';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as LocalAuthentication from 'expo-local-authentication';
 import Home from './Home';
-import config from '../config/config.json';
+import config from '../config/config';
+const db = {};
 
 
 export default function Login({ navigation }) {
@@ -35,29 +36,29 @@ export default function Login({ navigation }) {
     }
 
     //Biometria
-    async function biometric() {
-        let compatible = await LocalAuthentication.hasHardwareAsync();
-        if (compatible) {
-            let biometricRecords = await LocalAuthentication.isEnrolledAsync();
-            if (!biometricRecords) {
-                alert('Biometria não cadastrada');
-            } else {
-                let result = await LocalAuthentication.authenticateAsync();
-                if (result.success) {
-                    sendForm();
-                } else {
-                    setUser(null);
-                    setPassword(null);
-                }
-            }
-        }
-    }
+    // async function biometric() {
+    //     let compatible = await LocalAuthentication.hasHardwareAsync();
+    //     if (compatible) {
+    //         let biometricRecords = await LocalAuthentication.isEnrolledAsync();
+    //         if (!biometricRecords) {
+    //             alert('Biometria não cadastrada');
+    //         } else {
+    //             let result = await LocalAuthentication.authenticateAsync();
+    //             if (result.success) {
+    //                 sendForm();
+    //             } else {
+    //                 setUser(null);
+    //                 setPassword(null);
+    //             }
+    //         }
+    //     }
+    // }
 
 
     //Envio do formulário de login
     
     async function sendForm() {
-        let response = await fetch('http://192.168.0.230:3000/logado?name=' +user+'&password='+ password, {
+        let response = await fetch('http://192.168.1.2:3000/logado?name=' +user+'&password='+ password, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -75,7 +76,7 @@ export default function Login({ navigation }) {
             setDisplay('flex');
             setTimeout(() => {
                 setDisplay('none');
-            }, 5000);
+            }, 3000);
             await AsyncStorage.clear();
         } else {
             await AsyncStorage.setItem('userData', JSON.stringify(json));
