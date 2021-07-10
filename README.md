@@ -1,6 +1,6 @@
-# app
-Primeiros comandos:
+# Idema Mobile
+<h3> Primeiros comandos: </h3>
 
-yarn install
+* yarn install
 
-expo start
+* expo start
