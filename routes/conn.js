@@ -1,6 +1,6 @@
 var db = {
     user: 'sa',
-    password: '@JiuJitsu333',
+    password: '',
     database: 'model',
     server: '192.168.1.3',
     options: {
